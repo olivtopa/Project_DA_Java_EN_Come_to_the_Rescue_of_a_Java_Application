@@ -1,16 +1,19 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Simple brute force implementation
  *
  */
-public class ReadSymptomDataFromFile implements ISymptomReader {
+public class ReadSymptomDataFromFile implements ISymptomReader 
+{
 
 	private String filepath;
 	
@@ -18,30 +21,50 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
 	 */
 	
-	public ReadSymptomDataFromFile (String filepath) {
+	public ReadSymptomDataFromFile (String filepath) 
+	{
 		this.filepath = filepath;
 	}
 	
 	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
+	public List<String> GetSymptoms() 
+		{
+			Map<String, Long> compteurs = new HashMap<>();
 		
-		if (filepath != null) {
-			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
-				String line = reader.readLine();
-				
-				while (line != null) {
-					result.add(line);
-					line = reader.readLine();
-				}
-				reader.close();
-			} catch (IOException e) {
+			List<String> linesToMap = compteurs.entrySet().stream()
+														  .map(entry-> entry.getKey()+": "+entry.getValue())
+														  .collect(Collectors.toList());
+		
+					
+		if (filepath != null) 
+		{
+			try 
+			{
+		List<String> lines = Files.readAllLines(Paths.get(filepath));
+			
+			
+			for(String line : lines) 
+			{
+			 
+				if ( compteurs.containsKey(line) ) { 
+					// si la ligne contient déjà la ligne, on incrémente le compteur qui est associé
+			                compteurs.put(line, compteurs.get(line)+1);
+			        }
+			        else {
+				       // sinon on ajoute l'association en initialisant le compteur à 1
+				       compteurs.put(line, 1L);
+			        }
+		
+			}
+} catch (IOException e) 
+			
+			{
 				e.printStackTrace();
 			}
-		}
 		
-		return result;
+		}
+		return linesToMap;
+	
 	}
 
 }
