@@ -3,9 +3,10 @@ package com.hemebiotech.analytics;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -15,55 +16,58 @@ import java.util.stream.Collectors;
 public class ReadSymptomDataFromFile implements ISymptomReader 
 {
 
-	private String filepath;
+	String cheminFichier; /* attribut */
 	
 	/**
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
 	 */
 	
-	public ReadSymptomDataFromFile (String filepath) 
+	public ReadSymptomDataFromFile (String fichier)  /* constructeur */
 	{
-		this.filepath = filepath;
+		this.cheminFichier = fichier; /* initialisation des attributs avec la valeur passée au constructeur */
 	}
 	
-	@Override
 	public List<String> GetSymptoms() 
 		{
-			Map<String, Long> compteurs = new HashMap<>();
-		
-			List<String> linesToMap = compteurs.entrySet().stream()
-														  .map(entry-> entry.getKey()+": "+entry.getValue())
-														  .collect(Collectors.toList());
-		
+			Map<String, Long> mapOrdonnee = new LinkedHashMap<>(); /* Map qui va contenir ma liste en respecterant
+																	 l'odre du fichier d'entrée */
+			TreeMap<String, Long> mapEnAlphabetique = new TreeMap<>();
+			mapEnAlphabetique.putAll(mapOrdonnee); /* nouvelle map avec classement des symptomes en ordre alphabetique */
+			
+			
+			if (cheminFichier != null) 
+			{
+				try 
+				{
+			List<String> tousLesSymptomes = Files.readAllLines(Paths.get(cheminFichier));
 					
-		if (filepath != null) 
-		{
-			try 
-			{
-		List<String> lines = Files.readAllLines(Paths.get(filepath));
+				for(String symptome : tousLesSymptomes) 
+				{
+				 
+					if ( mapOrdonnee.containsKey(symptome) ) { 
+						
+						mapOrdonnee.put(symptome, mapOrdonnee.get(symptome)+1); /* on associe à la présente key (symptome), la valeur incrémentée de 1*/
+				        }
+				        else {
+					     
+				        	mapOrdonnee.put(symptome, (long) 1); /* si symptome jamais rencontré, la valeur correspondante sera 1 (qui est un long) */
+				        }
 			
+				}
+	} catch (IOException e) 
+				
+				{
+					e.printStackTrace();
+				}
 			
-			for(String line : lines) 
-			{
-			 
-				if ( compteurs.containsKey(line) ) { 
-					// si la ligne contient déjà la ligne, on incrémente le compteur qui est associé
-			                compteurs.put(line, compteurs.get(line)+1);
-			        }
-			        else {
-				       // sinon on ajoute l'association en initialisant le compteur à 1
-				       compteurs.put(line, 1L);
-			        }
-		
 			}
-} catch (IOException e) 
 			
-			{
-				e.printStackTrace();
-			}
+			List<String> listFinale = mapEnAlphabetique.entrySet().stream()
+									.map(entry-> entry.getKey()+": "+entry.getValue()) /* collecte des cles et des valeurs de la map*/
+									.collect(Collectors.toList()); /* envoie, dans l'ordre collectés, ces elements vers une liste*/
+			return listFinale;
 		
-		}
-		return linesToMap;
+		
 	
 	}
 
