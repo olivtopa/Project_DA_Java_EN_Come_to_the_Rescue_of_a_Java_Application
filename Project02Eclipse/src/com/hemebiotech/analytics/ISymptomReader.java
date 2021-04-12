@@ -2,9 +2,6 @@ package com.hemebiotech.analytics;
 
 import java.util.List;
 
-
-/* Une interface constituée d'une méthode  GetSymptoms()*/
-
 /**
  * Anything that will read symptom data from a source
  * The important part is, the return value from the operation, which is a list of strings,
