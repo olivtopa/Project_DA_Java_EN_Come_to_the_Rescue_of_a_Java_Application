@@ -1,13 +1,10 @@
 package com.hemebiotech.analytics;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 /**
  * Simple brute force implementation
@@ -16,59 +13,36 @@ import java.util.stream.Collectors;
 public class ReadSymptomDataFromFile implements ISymptomReader 
 {
 
-	String cheminFichier; /* attribut */
+	private String filepath;
 	
 	/**
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
 	 */
 	
-	public ReadSymptomDataFromFile (String fichier)  /* constructeur */
-	{
-		this.cheminFichier = fichier; /* initialisation des attributs avec la valeur passée au constructeur */
+	public ReadSymptomDataFromFile (String filepath) {
+		this.filepath = filepath;
 	}
 	
-	public List<String> GetSymptoms() 
-		{
-			Map<String, Long> mapOrdonnee = new LinkedHashMap<>(); /* Map qui va contenir ma liste en respecterant
-																	 l'odre du fichier d'entrée */
-			TreeMap<String, Long> mapEnAlphabetique = new TreeMap<>();
-			mapEnAlphabetique.putAll(mapOrdonnee); /* nouvelle map avec classement des symptomes en ordre alphabetique */
-			
-			
-			if (cheminFichier != null) 
-			{
-				try 
-				{
-			List<String> tousLesSymptomes = Files.readAllLines(Paths.get(cheminFichier));
-					
-				for(String symptome : tousLesSymptomes) 
-				{
-				 
-					if ( mapOrdonnee.containsKey(symptome) ) { 
-						
-						mapOrdonnee.put(symptome, mapOrdonnee.get(symptome)+1); /* on associe à la présente key (symptome), la valeur incrémentée de 1*/
-				        }
-				        else {
-					     
-				        	mapOrdonnee.put(symptome, (long) 1); /* si symptome jamais rencontré, la valeur correspondante sera 1 (qui est un long) */
-				        }
-			
-				}
-	} catch (IOException e) 
+	@Override
+	public List<String> GetSymptoms() {
+		ArrayList<String> result = new ArrayList<String>();
+		
+		if (filepath != null) {
+			try {
+				BufferedReader reader = new BufferedReader (new FileReader(filepath));
+				String line = reader.readLine();
 				
-				{
-					e.printStackTrace();
+				while (line != null) {
+					result.add(line);
+					line = reader.readLine();
 				}
-			
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			
-			List<String> listFinale = mapEnAlphabetique.entrySet().stream()
-									.map(entry-> entry.getKey()+": "+entry.getValue()) /* collecte des cles et des valeurs de la map*/
-									.collect(Collectors.toList()); /* envoie, dans l'ordre collectés, ces elements vers une liste*/
-			return listFinale;
+		}
 		
-		
-	
+		return result;
 	}
-
 }
+	
