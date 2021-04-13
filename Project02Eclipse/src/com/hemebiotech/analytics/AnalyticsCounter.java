@@ -1,35 +1,37 @@
 package com.hemebiotech.analytics;
 
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 
 
 public class AnalyticsCounter 
 {
 
 	private static String fichierEntree = "symptoms.txt";
-	private static String fichierSortie = "results.out";
+		
 	
-	public static void main(String args[]) throws Exception 
+	public static void main(String args[]) 
 	{
-		try
-		{
 		/* lecture du fichier en entrée*/
-			
 	ReadSymptomDataFromFile LectureFichierEntree = new ReadSymptomDataFromFile(fichierEntree);
+	List<String> copie = LectureFichierEntree.GetSymptoms();
 	
+		/* compteur occurences des symptomes */
+	CompteurOccurences Comptage = new CompteurOccurences(copie);
+	Map<String, Long> motsComptes = Comptage.Handler();
 	
+	/* classement par ordre alphabétique */
+	SortAlphabetically OdreAlphabetique = new SortAlphabetically(motsComptes);
+	Map<String, Long> fichierFini = OdreAlphabetique.Handler();
+	
+	WriteInFile FichierFinal = new WriteInFile(fichierFini);
+	FichierFinal.Handler();
+	
+		
 		/* Creation du fichier de sortie*/
-	Files.write(Paths.get(fichierSortie), LectureFichierEntree.GetSymptoms());	
-		
-		}
-		
-	catch (IOException e) 
-		{
-		e.printStackTrace();
-		}
+	
 	}
+	
 }
 		
