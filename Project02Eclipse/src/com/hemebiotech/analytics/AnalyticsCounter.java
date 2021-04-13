@@ -25,11 +25,9 @@ public class AnalyticsCounter
 	SortAlphabetically OdreAlphabetique = new SortAlphabetically(motsComptes);
 	Map<String, Long> fichierFini = OdreAlphabetique.Handler();
 	
+	/* Ecriture du resultat dans le fichier de sortie */
 	WriteInFile FichierFinal = new WriteInFile(fichierFini);
 	FichierFinal.Handler();
-	
-		
-		/* Creation du fichier de sortie*/
 	
 	}
 	
