@@ -3,6 +3,8 @@ package com.hemebiotech.analytics;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CompteurOccurences implements ISymptomHandler
 {
@@ -19,18 +21,8 @@ public class CompteurOccurences implements ISymptomHandler
 	@Override
 	public Map<String, Long> Handler() 
 	{
-		for(String mot : inputList) 
-		{
-			if ( motComptes.containsKey(mot) ) 
-			{ 
-				// si la ligne contient déjà un mot, on incrémente le compteur qui est associé
-				motComptes.put(mot, motComptes.get(mot)+1);
-		    }
-		        else {
-			       // sinon on ajoute l'association en initialisant le compteur à 1
-		        	motComptes.put(mot, 1L);
-		        }
-		 }
+		motComptes = inputList.stream()
+					.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 		return motComptes;
 	}
 
