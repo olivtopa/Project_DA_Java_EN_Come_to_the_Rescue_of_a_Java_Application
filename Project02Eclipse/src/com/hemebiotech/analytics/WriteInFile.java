@@ -21,12 +21,12 @@ public class WriteInFile implements ISymptomHandler
 	@Override
 	public Map<String, Long> Handler(){
 		
-		List<String> ListForFile = mapEntree.entrySet()
+		List<String> ListForFile = mapEntree.entrySet()	/* Création format mot : nbreOcurrence et conversion Map en List*/
 				.stream()
 				.map(entry-> entry.getKey()+": "+entry.getValue())
 				.collect(Collectors.toList());
 		try {
-			Files.write(Paths.get(fichierSortie), ListForFile);
+			Files.write(Paths.get(fichierSortie), ListForFile);	/* Ecriture de la List générée dans le fichier de sortie */
 			} catch (IOException e) {
 			
 			e.printStackTrace();
