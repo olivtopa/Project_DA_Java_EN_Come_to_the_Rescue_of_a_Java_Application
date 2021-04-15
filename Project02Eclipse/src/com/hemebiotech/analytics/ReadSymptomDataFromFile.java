@@ -29,8 +29,7 @@ public class ReadSymptomDataFromFile {
 			result = Files.readAllLines(Paths.get(inputFile));
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Fichier introuvable");
-
+			
 		}
 
 		return result;
