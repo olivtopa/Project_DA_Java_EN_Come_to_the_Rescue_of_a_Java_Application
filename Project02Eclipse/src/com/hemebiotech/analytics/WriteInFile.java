@@ -18,8 +18,8 @@ public class WriteInFile implements Writer {
 	@Override
 	public Map<String, Long> writer() {
 
-		List<String> listForFile = mapEntree.entrySet() 
-				.stream().map(entry -> entry.getKey() + ": " + entry.getValue()).collect(Collectors.toList());
+		List<String> listForFile = mapEntree.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue())
+				.collect(Collectors.toList());
 		try {
 			Files.write(Paths.get(fichierSortie),
 					listForFile); /* Ecriture de la List générée dans le fichier de sortie */

@@ -8,11 +8,15 @@ import java.util.stream.Collectors;
 
 public class AnalyticsCounter {
 
-	public AnalyticsCounter(List<String> inputList) {
-		this.inList = inputList;
+	public AnalyticsCounter(String inputFile) {
+		this.inputFile = inputFile;
 	}
 
-	private List<String> inList;
+	String inputFile;
+
+	ReadSymptomDataFromFile fileReader = new ReadSymptomDataFromFile(inputFile);
+
+	List<String> inList = ReadSymptomDataFromFile.readFile();
 
 	public Map<String, Long> analyticsCounter() {
 		TreeMap<String, Long> countInAlphaOrder = new TreeMap<>();
