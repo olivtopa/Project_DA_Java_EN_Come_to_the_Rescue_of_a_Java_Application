@@ -22,7 +22,7 @@ public class ReadSymptomDataFromFile /* implements ISymptomReader */ {
 	 * ReadSymptomDataFromFile.filePath = filePath; }
 	 */
 
-	static String filePath = AnalyticsCounter.getInputFile();
+	static String filePath = Main.getInputFile();
 
 	/* @Override */
 	public static List<String> getSymptom() {

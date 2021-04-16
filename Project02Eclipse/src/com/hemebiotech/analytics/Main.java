@@ -5,6 +5,12 @@ import java.util.Map;
 public class Main {
 
 	private static final String INPUTFILE = "symptoms.txt";
+	
+	
+
+	public static String getInputFile() {
+		return INPUTFILE;
+	}
 
 	public static void main(String[] args) {
 

@@ -14,10 +14,10 @@ public class AnalyticsCounter {
 
 	static String inputFile;
 
-	public static String getInputFile() {
+	/*public static String getInputFile() {
 		return inputFile;
 
-	}
+	}*/
 
 	/*
 	 * ReadSymptomDataFromFile fileReader = new ReadSymptomDataFromFile(inputFile);
