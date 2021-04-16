@@ -8,20 +8,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WriteInFile implements Writer {
-	Map<String, Long> mapEntree;
-	private static String fichierSortie = "results.out";
+	private Map<String, Long> inputMap;
+	private static final String OUTPUT_FILE = "results.out";
 
-	public WriteInFile(Map<String, Long> mapEntree) {
-		this.mapEntree = mapEntree;
+	public WriteInFile(Map<String, Long> inputMap) {
+		this.inputMap = inputMap;
 	}
 
 	@Override
 	public Map<String, Long> writer() {
 
-		List<String> listForFile = mapEntree.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue())
+		List<String> listForFile = inputMap.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue())
 				.collect(Collectors.toList());
 		try {
-			Files.write(Paths.get(fichierSortie),
+			Files.write(Paths.get(OUTPUT_FILE),
 					listForFile); /* Ecriture de la List générée dans le fichier de sortie */
 		} catch (IOException e) {
 

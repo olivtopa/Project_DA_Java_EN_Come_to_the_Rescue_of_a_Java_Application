@@ -1,8 +1,8 @@
 package com.hemebiotech.analytics;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,28 +10,39 @@ import java.util.List;
  * Simple brute force implementation
  *
  */
-public class ReadSymptomDataFromFile {
+public class ReadSymptomDataFromFile /* implements ISymptomReader */ {
 
 	/**
 	 * @param filepath a full or partial path to file with symptom strings in it,
 	 *                 one per line
 	 */
-	/*private*/ static String inputFile;
 
-	ReadSymptomDataFromFile(String inputFile) {
-	}
+	/*
+	 * public ReadSymptomDataFromFile(String filePath) {
+	 * ReadSymptomDataFromFile.filePath = filePath; }
+	 */
 
-	static List<String> readFile() {
+	static String filePath = AnalyticsCounter.getInputFile();
 
-		List<String> result = new ArrayList<>();
-		try {
+	/* @Override */
+	public static List<String> getSymptom() {
+		ArrayList<String> result = new ArrayList<>();
 
-			result = Files.readAllLines(Paths.get(inputFile));
-		} catch (IOException e) {
-			e.printStackTrace();
-			
+		if (filePath != null) {
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(filePath));
+				String line = reader.readLine();
+
+				while (line != null) {
+					result.add(line);
+					line = reader.readLine();
+				}
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
+		System.out.println(filePath);
 		return result;
 	}
 }

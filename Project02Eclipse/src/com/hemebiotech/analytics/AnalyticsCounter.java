@@ -9,21 +9,28 @@ import java.util.stream.Collectors;
 public class AnalyticsCounter {
 
 	public AnalyticsCounter(String inputFile) {
-		this.inputFile = inputFile;
+		AnalyticsCounter.inputFile = inputFile;
 	}
 
-	String inputFile;
+	static String inputFile;
 
-	ReadSymptomDataFromFile fileReader = new ReadSymptomDataFromFile(inputFile);
+	public static String getInputFile() {
+		return inputFile;
 
-	List<String> inList = ReadSymptomDataFromFile.readFile();
+	}
+
+	/*
+	 * ReadSymptomDataFromFile fileReader = new ReadSymptomDataFromFile(inputFile);
+	 */
+
+	List<String> inList = ReadSymptomDataFromFile.getSymptom();
 
 	public Map<String, Long> analyticsCounter() {
 		TreeMap<String, Long> countInAlphaOrder = new TreeMap<>();
 		countInAlphaOrder
 				.putAll(inList.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+		System.out.println(countInAlphaOrder);
 		return countInAlphaOrder;
 
 	}
-
 }

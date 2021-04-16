@@ -8,8 +8,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Map<String, Long> finalvariable = new AnalyticsCounter(INPUTFILE).analyticsCounter();
-		
+		Map<String, Long> finalvariable = new AnalyticsCounter(INPUTFILE)
+				.analyticsCounter(); /** counts and sorts the words in alphabetical order andreturns a map */
+
 		new WriteInFile(finalvariable).writer();
 
 	}
