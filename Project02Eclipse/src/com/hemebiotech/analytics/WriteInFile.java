@@ -21,8 +21,7 @@ public class WriteInFile implements Writer {
 		List<String> listForFile = inputMap.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue())
 				.collect(Collectors.toList());
 		try {
-			Files.write(Paths.get(OUTPUT_FILE),
-					listForFile); /* Ecriture de la List générée dans le fichier de sortie */
+			Files.write(Paths.get(OUTPUT_FILE),listForFile); /* Writing the generated List in the output file*/
 		} catch (IOException e) {
 
 			e.printStackTrace();

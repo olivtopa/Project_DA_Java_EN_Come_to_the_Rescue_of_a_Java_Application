@@ -14,23 +14,11 @@ public class AnalyticsCounter {
 
 	String inputFile;
 
-	/*
-	 * public static String getInputFile() { return inputFile;
-	 * 
-	 * }
-	 */
+	public Map<String, Long> analyticsCounter() {
 
-	/*
-	 * ReadSymptomDataFromFile fileReader = new ReadSymptomDataFromFile(inputFile);
-	 */
-
-	
-
-	public Map<String, Long> analyticsCounter(){
-		
 		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile(inputFile);
 		List<String> inList = readSymptomDataFromFile.getSymptoms();
-		
+
 		TreeMap<String, Long> countInAlphaOrder = new TreeMap<>();
 		countInAlphaOrder
 				.putAll(inList.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
