@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Class which writes a Map to an output file 
+ *
+ */
+
 public class WriteInFile implements Writer {
 	private Map<String, Long> inputMap;
 	private static final String OUTPUT_FILE = "results.out";

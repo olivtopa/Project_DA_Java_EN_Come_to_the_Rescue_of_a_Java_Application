@@ -13,8 +13,8 @@ import java.util.List;
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	/**
-	 * @param filepath a full or partial path to file with symptom strings in it,
-	 *                 one per line
+	 * @param inputFile a full or partial path to file with symptom strings in it,
+	 *                  one per line
 	 */
 
 	String inputFile;
@@ -42,7 +42,6 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(inputFile);
 		return result;
 	}
 }

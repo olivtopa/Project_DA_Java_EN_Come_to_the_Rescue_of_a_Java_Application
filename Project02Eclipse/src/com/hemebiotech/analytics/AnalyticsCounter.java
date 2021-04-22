@@ -6,6 +6,12 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Class that counts and sorts the elements of a list (Symptoms file) in
+ * alphabetical order
+ *
+ */
+
 public class AnalyticsCounter {
 
 	public AnalyticsCounter(String inputFile) {
@@ -20,9 +26,12 @@ public class AnalyticsCounter {
 		List<String> inList = readSymptomDataFromFile.getSymptoms();
 
 		TreeMap<String, Long> countInAlphaOrder = new TreeMap<>();
+
+		/**
+		 * @return the counted and sorted elements of a inList a Map
+		 */
 		countInAlphaOrder
 				.putAll(inList.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
-		System.out.println(countInAlphaOrder);
 		return countInAlphaOrder;
 
 	}
