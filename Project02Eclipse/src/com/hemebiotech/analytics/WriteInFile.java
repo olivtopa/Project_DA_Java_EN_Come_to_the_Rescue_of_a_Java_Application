@@ -8,15 +8,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Class which writes a Map to an output file
- *
+ * the program will not be stopped by the exception,
+ * but it will not create an output file
  */
 
 public class WriteInFile implements Writer {
 	private Map<String, Long> inputMap;
 	private static final String OUTPUT_FILE = "results.out";
 
-	public WriteInFile(Map<String, Long> inputMap) {
+	WriteInFile(Map<String, Long> inputMap) {
 		this.inputMap = inputMap;
 	}
 
@@ -25,8 +25,9 @@ public class WriteInFile implements Writer {
 
 		List<String> listForFile = inputMap.entrySet().stream().map(entry -> entry.getKey() + ": " + entry.getValue())
 				.collect(Collectors.toList());
+
 		try {
-			Files.write(Paths.get(OUTPUT_FILE), listForFile); /* Writing the generated List in the output file */
+			Files.write(Paths.get(OUTPUT_FILE), listForFile);
 		} catch (IOException e) {
 
 			e.printStackTrace();
