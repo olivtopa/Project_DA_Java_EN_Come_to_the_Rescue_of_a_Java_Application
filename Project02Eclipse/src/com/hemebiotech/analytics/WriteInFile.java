@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * the program will not be stopped by the exception,
- * but it will not create an output file
+ * the program will not be stopped by the exception, but it will not create an
+ * output file
  */
 
 public class WriteInFile implements Writer {

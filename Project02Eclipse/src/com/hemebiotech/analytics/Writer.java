@@ -3,7 +3,7 @@ package com.hemebiotech.analytics;
 import java.util.Map;
 
 /**
- * For writing or printing Map data to an output 
+ * For writing or printing Map data to an output
  * 
  */
 
