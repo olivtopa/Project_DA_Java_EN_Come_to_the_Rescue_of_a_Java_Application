@@ -21,9 +21,9 @@ public class AnalyticsCounter {
 
 	String inputFile;
 
-	void analyticsCounter() {
+	void trendCounting() {
 
-		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile(inputFile);
+		ISymptomReader readSymptomDataFromFile = new ReadSymptomDataFromFile(inputFile);
 		List<String> inList = readSymptomDataFromFile.getSymptoms();
 
 		TreeMap<String, Long> countInAlphaOrder = new TreeMap<>();
@@ -32,7 +32,7 @@ public class AnalyticsCounter {
 				.putAll(inList.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
 
 		if (Files.exists(Paths.get(inputFile))) {
-			WriteInFile writeInFile = new WriteInFile(countInAlphaOrder);
+			Writer writeInFile = new WriteInFile(countInAlphaOrder);
 			writeInFile.writer();
 		}
 

@@ -6,9 +6,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		AnalyticsCounter finalvariable = new AnalyticsCounter(INPUTFILE);
+		AnalyticsCounter anlyticsCounter = new AnalyticsCounter(INPUTFILE);
 
-		finalvariable.analyticsCounter();
+		anlyticsCounter.trendCounting();
 
 	}
 
